@@ -1,0 +1,121 @@
+@import io.orite.domain.CreditLimit
+@import io.orite.ProductOps
+@(creditLimits:List[CreditLimit])
+    <html>
+    <head>
+        <style>
+            body {
+                font-family: Helvetica,sans-serif;
+            }
+
+            .horizontalrule {
+                background-color: #6D7373;
+                width: 70%;
+                margin-left: 15%;
+                margin-top: 30px;
+                height: 3px
+            }
+
+            hr {
+                width: 293px;
+                border-top-width: 10px;
+                border-style: solid;
+                margin-top: 20px;
+            }
+
+            h1 {
+                margin: 0;
+                font-size: 40px;
+                font-weight: bold;
+                color: #6D7373;
+                padding-top: 40px;
+                text-align: center;
+            }
+
+            h2 {
+                margin: 0;
+                font-size: 26px;
+                font-weight: bold;
+                padding-top: 40px;
+                text-align: center;
+                color: #00AD55;
+            }
+
+            h3 {
+                margin: 0;
+                font-size: 22px;
+                font-weight: bold;
+                color: black;
+                padding-top: 40px;
+            }
+
+            table {
+                border-collapse: collapse;
+                width: 100%;
+                font-size: 22px;
+                margin-top: 40px;
+            }
+
+            th {
+                text-align: left;
+                padding: 4px;
+                border-left: 0.5px solid #898C91;
+                border-right: 0.5px solid #898C91;
+                border-top: 0.5px solid #898C91;
+                padding-left: 10px;
+                border-bottom: 2px solid #898C91;
+                background-color: #00AD55;
+                color: #FFFFFF;
+                font-size: 100%;
+            }
+
+            td {
+                text-align: left;
+                padding: 4px;
+                border-left: 0.5px solid #898C91;
+                border-right: 0.5px solid #898C91;
+                border-top: 0.5px solid #898C91;
+                padding-left: 10px;
+                border-bottom: 2px solid #898C91;
+                font-size: 80%;
+            }
+
+            tr {
+                padding-right: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Credit limits</h1>
+        <hr class="horizontalrule"/>
+        @display(fieldName: String) = @{
+            fieldName.replaceAll(
+                String.format("%s|%s|%s",
+                    "(?<=[A-Z])(?=[A-Z][a-z])",
+                    "(?<=[^A-Z])(?=[A-Z])",
+                    "(?<=[A-Za-z])(?=[^A-Za-z])"
+                ),
+                " "
+            ).toUpperCase
+        }
+        @if(creditLimits.nonEmpty) {
+            <table>
+                <tr>
+                    @for(fieldName<-creditLimits.head.fieldNames) {
+                        <th>@display(fieldName)</th>
+                    }
+                </tr>
+                @for(creditLimit<-creditLimits) {
+                    <tr>
+                        <td>@creditLimit.name</td>
+                        <td>@creditLimit.address</td>
+                        <td>@creditLimit.postCode</td>
+                        <td>@creditLimit.phoneNumber</td>
+                        <td>@creditLimit.limit</td>
+                        <td>@creditLimit.dateOfBirth</td>
+                    </tr>
+                }
+            </table>
+        }
+    </body>
+</html>
