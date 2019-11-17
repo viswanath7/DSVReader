@@ -1,13 +1,9 @@
 package io.orite.service
 import java.nio.file.Path
-
-import com.typesafe.scalalogging.Logger
 import cats.effect.IO
 import io.orite.domain.CreditLimit
 
 object HTMLFileWriter {
-	
-	private[this] val logger = Logger("io.orite.service.HTMLFileWriter")
 	
 	def createHTML(creditLimits: List[CreditLimit]): IO[Path] = {
 		import java.io.File
@@ -26,7 +22,6 @@ object HTMLFileWriter {
 		def writeToFile(filePath: Path, content:String): Unit = IO.fromTry {
 			import java.nio.file.Files
 			import scala.util.Using
-			logger debug s"Writing HTML content: \n $content"
 			Using(Files newBufferedWriter filePath) { _.write(content)}
 		}.unsafeRunAsyncAndForget()
 		

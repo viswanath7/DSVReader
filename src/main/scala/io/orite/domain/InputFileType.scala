@@ -1,6 +1,4 @@
 package io.orite.domain
-import io.orite.service.Parser
-
 import enumeratum._
 
 sealed trait InputFileType extends EnumEntry

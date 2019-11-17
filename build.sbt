@@ -20,6 +20,10 @@ libraryDependencies ++= {
 		"com.typesafe.scala-logging" %% "scala-logging" % "3.9.2",
 		"org.scalatest" %% "scalatest" % "3.2.0-M1" % Test,
 		"org.mockito" % "mockito-core" % "3.1.0" % Test,
+		"com.github.alexarchambault" %% "scalacheck-shapeless_1.14" % "1.2.3" % Test,
+		"com.47deg" %% "scalacheck-toolbox-datetime" % "0.3.1" % Test,
+		"com.47deg" %% "scalacheck-toolbox-magic" % "0.3.1" % Test,
+		"com.47deg" %% "scalacheck-toolbox-combinators" % "0.3.1" % Test,
 		"org.typelevel" %% "cats-testkit" % catsVersion % Test
 	)
 }
@@ -56,8 +60,8 @@ scalacOptions ++= Seq(
 	"-Ywarn-extra-implicit", // Warn when more than one implicit parameter section is defined.
 	"-Ywarn-numeric-widen", // Warn when numerics are widened.
 	"-Ywarn-unused:implicits", // Warn if an implicit parameter is unused.
-	// "-Ywarn-unused:imports", // Warn if an import selector is not referenced.
-	// "-Ywarn-unused:locals", // Warn if a local definition is unused.
+	//"-Ywarn-unused:imports", // Warn if an import selector is not referenced.
+	"-Ywarn-unused:locals", // Warn if a local definition is unused.
 	// "-Ywarn-unused:params", // Warn if a value parameter is unused.
 	// "-Ywarn-unused:patvars", // Warn if a variable bound in a pattern is unused.
 	"-Ywarn-unused:privates", // Warn if a private member is unused.
