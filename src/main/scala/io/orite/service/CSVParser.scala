@@ -48,22 +48,21 @@ object CSVParser extends RegexParsers with Parser {
 	
 	private[this] val dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy")
 	
-	def readToCreditLimits: IO[List[CreditLimit]] = {
+	def readToCreditLimits: IO[List[CreditLimit]] = IO.suspend(IO.fromTry {
 		import scala.util.Using
-		IO.fromTry {
-			Using(scala.io.Source.fromResource("workbook.csv")) { bufferedSource =>
-				bufferedSource
-					.getLines
-					.drop(1)
-					.map(parse)
-					.map(_.take(6).toList)
-					.map {
-						case List(name, address, postCode, phone, limit, birthDay) =>
-							import java.time.LocalDate
-							CreditLimit(name, address, postCode, phone, limit.toDouble, LocalDate.parse(birthDay, dateFormat))
-						case _ => throw new IllegalStateException("Classpath resource 'workbook.csv' seems to contain invalid or incomplete data")
-					}.toList
-			}
+		Using(scala.io.Source.fromResource("workbook.csv")) { bufferedSource =>
+			bufferedSource
+				.getLines
+				.drop(1)
+				.map(parse)
+				.map(_.take(6).toList)
+				.map {
+					case List(name, address, postCode, phone, limit, birthDay) =>
+						import java.time.LocalDate
+						CreditLimit(name, address, postCode, phone, limit.toDouble, LocalDate.parse(birthDay, dateFormat))
+					case _ => throw new IllegalStateException("Classpath resource 'workbook.csv' seems to contain invalid or incomplete data")
+				}.toList
 		}
-	}
+	})
+	
 }

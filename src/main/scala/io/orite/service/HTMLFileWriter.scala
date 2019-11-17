@@ -32,8 +32,8 @@ object HTMLFileWriter {
 		import scala.concurrent.ExecutionContext
 		implicit val contextShift: ContextShift[IO] = IO.contextShift(ExecutionContext.global)
 		
-		(createTemporaryFile,
-			IO.pure(template.html.credit_limits(creditLimits).toString())
+		(IO.suspend(createTemporaryFile),
+			IO.suspend(IO.pure(template.html.credit_limits(creditLimits).toString()))
 			)
 			.parMapN((temporaryFile, content) => {
 			writeToFile(temporaryFile, content)
