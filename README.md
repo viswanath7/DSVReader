@@ -1,6 +1,4 @@
-# BE-Test
-
-## Approach
+# Objective
 
 As the task is relatively simple, the objective is accomplished as a command line utility and not a web-application. Also, no fancy frameworks like akka are used. I've also opted out from using common approaches like a type-class pattern as it'd be an overkill for this task.
 
